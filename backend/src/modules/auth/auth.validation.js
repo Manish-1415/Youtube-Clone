@@ -20,3 +20,18 @@ export const loginSchema = Joi.object({
 
   password: Joi.string().required(),
 });
+
+
+
+import Joi from "joi";
+
+export const changePasswordSchema = Joi.object({
+  oldPassword: Joi.string()
+    .min(6)
+    .max(30)
+    .required(),
+  newPassword: Joi.string()
+    .min(6)
+    .max(30)
+    .required(),
+});

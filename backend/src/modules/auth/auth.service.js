@@ -94,6 +94,24 @@ const authService = {
         const accessToken = createAccessToken(accessPayload);
 
         return accessToken;
+    },
+
+    changeUserPassword : async (userId , oldPassword , newPassword , refreshToken) => {
+        // find user
+        let user = await Auth.findById(userId);
+
+        if(!user) throw new ApiError(404 , "User Not Found");
+
+        const validateOwnerShip = await user.compareRefreshToken(refreshToken);
+
+        if(!validateOwnerShip) throw new ApiError(401 , "User is not authorized to perform this operation");
+
+        const checkPassword = await user.comparePassword(oldPassword);
+
+        if(!checkPassword) throw new ApiError(400, "Please Provide Valid Password")
+
+        user.password = newPassword;
+        return await user.save();
     }
 }
 
