@@ -112,6 +112,23 @@ const authService = {
 
         user.password = newPassword;
         return await user.save();
+    },
+
+    deleteUserEntry : async(userId , refreshToken) => {
+        // find user
+        const findUser = await Auth.findById(userId);
+
+        if(!findUser) throw new ApiError(404 , "User Not Found");
+
+        const checkOwnership = await findUser.compareRefreshToken(refreshToken);
+
+        if(!checkOwnership) throw new ApiError(401 , "User is not authorized to perform this operation");
+
+        const deleteUser = await Auth.findByIdAndDelete(userId);
+
+        if(!deleteUser) throw new ApiError(500 , "Error Occurred while deleting user");
+
+        return deleteUser;
     }
 }
 

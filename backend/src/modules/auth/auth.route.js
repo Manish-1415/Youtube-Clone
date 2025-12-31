@@ -17,6 +17,8 @@ router.post("/logout" , validateUserMiddleware , logOutUser);
 
 router.post("/refresh" , validateRefreshToken , assignNewToken);
 
-router.patch("change-password", validateUserMiddleware , validateSchemaMiddleware(changePasswordSchema) , changePassword )
+router.patch("/change-password", validateUserMiddleware , validateSchemaMiddleware(changePasswordSchema) , changePassword )
+
+router.delete("/delete-user" , validateUserMiddleware , )
 
 export default router;

@@ -90,3 +90,21 @@ export const changePassword = asyncHandler(async (req , res) => {
   .status(200)
   .json(new ApiResponse(200, "Password Changed Successfully.", resObjForClient));
 })
+
+
+
+export const deleteRegisterUser = asyncHandler(async (req , res) => {
+  const userId = req.user.id;
+  const refreshToken = req.cookies.refreshToken;
+
+  const deleteUser = await authService.deleteUserEntry(userId , refreshToken);
+
+  return res
+  .status(204)
+  .clearCookie("refreshToken" , {
+      httpOnly: true,
+      secure: false,
+      sameSite: "lax",
+  })
+  .json({statusCode : 204 , message : "User Account Deleted"});
+})
