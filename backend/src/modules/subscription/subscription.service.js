@@ -1,9 +1,10 @@
 import { Subscription } from "./subscription.model";
 import ApiError from "../../utility/ApiError.js"
 import {Channel} from "../channel/channel.model.js";
+import eventBus from "../../eventBus/index.js";
 
 const subscriptionService = { 
-    subscribeChannel : async (channelId , userId) => {
+    subscribeChannel : async (channelId , userId , userName) => {
         // find if user already subscribed or not
         const checkSubscriber = await Subscription.findOne({subscriberUserId : userId , channelId : channelId});
 
@@ -17,6 +18,18 @@ const subscriptionService = {
         const subscribe = await Subscription.create(subscribeByUser);
 
         if(!subscribe) throw new ApiError(500 , "Error Occurred While Subscribing Channel");
+
+
+        // shout Event 🐉🐉🐉😁😁😁😁🦁🦁🦁🦁
+
+        eventBus.emit("SUBSCRIPTION_CREATED" , {
+            receiverId : channelId,
+            actorId : userId,
+            type : "SUBSCRIPTION",
+            targetType : "CHANNEL",
+            targetId : channelId,
+            message : `${userName} Subscribed Your Channel`
+        })
 
         // now update the subscriber count of that channel
         const subscribersCount = await Subscription.countDocuments({channelId});

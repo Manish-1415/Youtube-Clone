@@ -5,8 +5,9 @@ import subscriptionService from "./subscription.service.js";
 export const addSubscriber = asyncHandler(async (req , res) => {
     const channelId = req.params.channelId;
     const userId = req.user.id;
+    const userName = req.user.name;
 
-    const subscribe = await subscriptionService.subscribeChannel(channelId , userId);
+    const subscribe = await subscriptionService.subscribeChannel(channelId , userId , userName);
 
     return res
     .status(201)
