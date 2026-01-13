@@ -27,6 +27,7 @@ import channelRouter from "./modules/channel/channel.route.js";
 import videoRouter from "./modules/video/video.route.js";
 import subscriptionRouter from "./modules/subscription/subscription.route.js";
 import commentRouter from "./modules/comments/comment.route.js";
+import reactionRouter from "./modules/reaction/reaction.route.js";
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/user", userRouter);
@@ -34,7 +35,7 @@ app.use("/api/v1/channels", channelRouter);
 app.use("/api/v1/videos" , videoRouter);
 app.use("/api/v1/subscriptions" , subscriptionRouter);
 app.use("/api/v1/comments" , commentRouter);
-
+app.use("/api/v1/reactions" , reactionRouter);
 // err middleware at last
 import errorMiddleware from "./middlewares/error.middleware.js";
 
