@@ -6,9 +6,10 @@ export const createComment = asyncHandler(async (req , res) => {
     const videoId = req.params.videoId;
     const userId = req.user.id;
     const commentByUser = req.body.comment;
+    const userName = req.user.name;
 
 
-    const comment = await commentService.createCommentEntry(videoId , userId , commentByUser);
+    const comment = await commentService.createCommentEntry(videoId , userId , commentByUser, userName);
 
     return res
     .status(201)

@@ -1,8 +1,10 @@
+import eventBus from "../../eventBus";
 import ApiError from "../../utility/ApiError"
+import { Video } from "../video/video.model";
 import { Comment } from "./comment.model"
 
 const commentService = {
-    createCommentEntry : async (videoId , userId , commentByUser) => {
+    createCommentEntry : async (videoId , userId , commentByUser , userName) => {
         // here multiple comments by same user is ok.
 
         const commentObj = {
@@ -14,6 +16,25 @@ const commentService = {
         const comment = await Comment.create(commentObj);
 
         if(!comment) throw new ApiError(500 , "Error Occurred While Creating Comments");
+
+        // shout event 🐉🐉🦁🦁😁😁
+
+
+        // find channel Id
+        const video = await Video.findById(videoId);
+
+        if(!video) throw new ApiError(404 , "Video Not Found");
+
+        const receiverId = video.channelId;
+
+        eventBus.emit("COMMENT_CREATED", {
+            receiverId,
+            actorId : userId,
+            type : "COMMENT",
+            targetType : "VIDEO",
+            targetId : videoId,
+            message : `${userName} commented on your Video`
+        })
 
         return comment;
     },
