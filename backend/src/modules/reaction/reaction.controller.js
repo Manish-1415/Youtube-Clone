@@ -8,8 +8,9 @@ export const generateNewReaction = asyncHandler(async (req , res) => {
     const targetId = req.body.targetId;
     const targetType = req.body.targetType;
     const reactionByUser = req.body.reaction;
+    const userName = req.user.name;
 
-    const reaction = await reactionService.createReactionEntry(userId , targetId , targetType , reactionByUser);
+    const reaction = await reactionService.createReactionEntry(userId , targetId , targetType , reactionByUser , userName);
 
     return res
     .status(201)

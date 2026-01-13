@@ -1,10 +1,13 @@
-import ApiError from "../../utility/ApiError";
+import ApiError from "../../utility/ApiError.js";
 import { Reaction } from "./reaction.model";
+import eventBus from "../../eventBus/index.js";
+import {Video} from "../video/video.model.js";
+import {Comment} from "../comments/comment.model.js"
 
 // we will not store likeCount & dislikeCount in video - because reaction frequently changes & the load will be transfer to the Video module thats why , separation of concern.
 
 const reactionService = {
-    createReactionEntry : async (userId , targetId , targetType , reaction) => {
+    createReactionEntry : async (userId , targetId , targetType , reaction , userName) => {
         // find the entry first 
         const findReaction = await Reaction.findOne({userId , targetId , targetType});
 
@@ -27,8 +30,43 @@ const reactionService = {
 
         const dislikeCount = await Reaction.countDocuments({targetId , targetType , reaction : "dislike"});
 
+
+        // Event Bus Things .
+        
+        let receiverId ;
+
+        if(createNewReaction.targetType === "video") {
+            const videoDoc = await Video.findById(targetId);
+
+            if(!videoDoc) throw new ApiError(404 , "Video Not Found");
+
+            receiverId = videoDoc.channelId;
+        }
+        else {
+            const commentDoc = await Comment.findById(targetId);
+
+            if(!commentDoc) throw new ApiError(404 , "Comment Not Found");
+
+            const videoDoc = await Video.findById(commentDoc.videoId);
+
+            if(!videoDoc) throw new ApiError(404 , "Video Not Found");
+
+            receiverId = videoDoc.channelId;
+        }
+
+        // here shout data with eventBus
+        eventBus.emit("REACTION_CREATED" , {
+            receiverId,
+            actorId : userId,
+            type : createNewReaction.reaction === "like" ? "LIKE" : "DISLIKE",
+            targetType : createNewReaction.targetType === "video" ? "VIDEO" : "COMMENT",
+            targetId,
+            message : createNewReaction.targetType === "video" ? `${userName} reacted on your Video` : `${userName} reacted on your comment`
+        })
+
         return {reaction : createNewReaction , likesCount , dislikeCount}
     },
+
 
     deleteReactionEntry : async (reactionId , userId) => {
         // find reaction.
@@ -84,7 +122,7 @@ const reactionService = {
                 likesCount : 0,
                 dislikeCount : 0,
             }
-        }
+        } 
 
         const likesCount = await Reaction.countDocuments({targetId , targetType : reactionsOnAType.targetType , reaction : "like"});
         const dislikeCount = await Reaction.countDocuments({targetId , targetType : reactionsOnAType.targetType , reaction : "dislike"});
@@ -101,7 +139,7 @@ const reactionService = {
         }
 
         return { userReaction : findReaction.reaction }
-    }
+    },
 }
 
 export default reactionService;
