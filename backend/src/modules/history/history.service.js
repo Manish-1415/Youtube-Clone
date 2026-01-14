@@ -9,7 +9,7 @@ const historyService = {
         if(findHistory) {
             findHistory.watchedAt = Date.now();
             findHistory.watchCount += 1;
-            
+
             return await findHistory.save();
         }
         else {
