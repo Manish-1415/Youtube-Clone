@@ -25,7 +25,7 @@ const channelSchema = new mongoose.Schema(
     avatar: {
       type: {
         url : {type : String , required : true},
-        path : {type : String , required : true}
+        path : {type : String , required : true},
       },
     },
 
@@ -33,6 +33,7 @@ const channelSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+
   },
   { timestamps: true }
 );

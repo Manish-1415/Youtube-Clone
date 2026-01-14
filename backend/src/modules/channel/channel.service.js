@@ -1,3 +1,4 @@
+import eventBus from "../../eventBus/index.js";
 import ApiError from "../../utility/ApiError";
 import {Auth} from "../auth/auth.model.js"
 import { Channel } from "./channel.model.js";
@@ -42,11 +43,27 @@ const channelService = {
         // if channel is there then check its userId's
         if(findTheChannel.ownerUserId.toString() !== userId.toString()) throw new ApiError(401 , "User is Not Authorized to perform this operation");
 
+
+        // store publicId for deleting purpose
+        let oldPublicId ;
+
+        if(channelInfoObj.avatar.publicId && findTheChannel.avatar?.path) {
+            oldPublicId = findTheChannel.avatar.path;
+        }
+
         // now update the channelInfo
 
         const findAndUpdateChannel = await Channel.findByIdAndUpdate(channelId , channelInfoObj , {new : true});
 
         if(!findAndUpdateChannel) throw new ApiError(500 , "Error Occurred While Updating the channel");
+
+        // shout the event ⚙️⚙️🐉🐉👉👉😁😁
+
+        if(oldPublicId && oldPublicId !== undefined) {
+            eventBus.emit("CLOUDINARY_FILE_DELETE" , {
+            publicId : oldPublicId,
+        })
+        }
 
         return findAndUpdateChannel;
     },
@@ -60,10 +77,23 @@ const channelService = {
 
         if(findChannel.ownerUserId.toString() !== userId.toString()) throw new ApiError(401 , "User Cannot Perform This Operation");
 
+        // store old publicId
+        let oldPublicId;
+
+        if(findChannel.avatar.path) {
+            oldPublicId = findChannel.avatar.path;
+        }
+
         // find & delete the channel
         const findAndDeleteChannel = await Channel.findByIdAndDelete(channelId);
 
         if(!findAndDeleteChannel) throw new ApiError(500 , "Error Occurred while saving DB Entry");
+
+        if(oldPublicId && oldPublicId !== undefined) {
+            eventBus.emit("CLOUDINARY_FILE_DELETE" , {
+            publicId : oldPublicId
+        })
+        }
 
         return findAndDeleteChannel;
     },
