@@ -1,4 +1,4 @@
-import eventBus from "../../eventBus";
+import eventBus from "../../eventBus/index.js";
 import ApiError from "../../utility/ApiError"
 import { Video } from "../video/video.model";
 import { Comment } from "./comment.model"
