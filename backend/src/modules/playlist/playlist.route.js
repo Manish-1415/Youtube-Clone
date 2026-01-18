@@ -1,6 +1,6 @@
 import { Router } from "express";
 import validateUserMiddleware from "../../middlewares/validUser.middleware";
-import { createPlaylist, updatePlaylist } from "./playlist.controller";
+import { createPlaylist, deletePlaylist, deleteVidFromPlaylist, getPlaylistsOfUser, getPlaylistVids, updatePlaylist } from "./playlist.controller";
 import validateSchemaMiddleware from "../../middlewares/validation.middleware"
 import { playlistValidationSchema, videoIdValidation } from "./playlist.validation";
 
@@ -10,5 +10,12 @@ router.post("/", validateUserMiddleware , validateSchemaMiddleware(playlistValid
 
 router.patch("/:playlistId" , validateUserMiddleware , validateSchemaMiddleware(videoIdValidation) , updatePlaylist);
 
+router.delete("/video/:playlistId", validateUserMiddleware , validateSchemaMiddleware(videoIdValidation) , deleteVidFromPlaylist)
+
+router.delete("/:playlistId", validateUserMiddleware , deletePlaylist);
+
+router.get("/:playlistId" , getPlaylistVids);
+
+router.get("/" , validateUserMiddleware , getPlaylistsOfUser);
 
 export default router;
