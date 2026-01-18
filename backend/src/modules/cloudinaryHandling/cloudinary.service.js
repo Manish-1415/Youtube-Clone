@@ -16,16 +16,24 @@ const cloudinaryHandlingService = {
         return delFile;
     },
 
-    deleteThumbnailAndVideo : async (payload) => {
+    deleteThumbnail : async (payload) => {
         const delThumb = await cloudinary.uploader.destroy(payload.thumbnialPublicId);
 
         if(!delThumb) throw new ApiError(500 , "Error Occurred while deleting thumbnail");
 
+        return delThumb;
+    },
+
+    deleteVideoAndThumb : async (payload) => {
         const delVid = await cloudinary.uploader.destroy(payload.videoPublicId);
 
-        if(!delVid) throw new ApiError(500 , "Error Occurred while deleting video");
+        if(!delVid) throw new ApiError(500 , "Error Occurred while deleting video")
 
-        return "Thumbnail & Video Deleted"
+        const delThumb = await cloudinary.uploader.destroy(payload.thumbnialPublicId);
+
+        if(!delThumb) throw new ApiError(500 , "Error Occurred while deleting thumbnail");
+
+        return {delVid , delThumb}
     }
 }
 

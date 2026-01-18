@@ -1,5 +1,5 @@
-import ApiError from "../utility/ApiError";
-import { verifyRefreshToken } from "../utility/tokens";
+import ApiError from "../utility/ApiError.js";
+import { verifyRefreshToken } from "../utility/tokens.js";
 
 const validateRefreshToken = (req , res , next) => {
     try {

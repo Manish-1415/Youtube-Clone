@@ -1,6 +1,6 @@
 import { Router } from "express";
-import validateUserMiddleware from "../../middlewares/validUser.middleware";
-import { createWatchLater, deleteWatchLaterDoc, getWatchLaterForUser } from "./watchLater.controller";
+import validateUserMiddleware from "../../middlewares/validUser.middleware.js";
+import { createWatchLater, deleteWatchLaterDoc, getWatchLaterForUser } from "./watchLater.controller.js";
 
 const router = Router();
 

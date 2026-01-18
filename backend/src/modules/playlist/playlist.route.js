@@ -1,8 +1,8 @@
 import { Router } from "express";
-import validateUserMiddleware from "../../middlewares/validUser.middleware";
-import { createPlaylist, deletePlaylist, deleteVidFromPlaylist, getPlaylistsOfUser, getPlaylistVids, updatePlaylist } from "./playlist.controller";
-import validateSchemaMiddleware from "../../middlewares/validation.middleware"
-import { playlistValidationSchema, videoIdValidation } from "./playlist.validation";
+import validateUserMiddleware from "../../middlewares/validUser.middleware.js";
+import { createPlaylist, deletePlaylist, deleteVidFromPlaylist, getPlaylistsOfUser, getPlaylistVids, updatePlaylist } from "./playlist.controller.js";
+import validateSchemaMiddleware from "../../middlewares/validation.middleware.js"
+import { playlistValidationSchema, videoIdValidation } from "./playlist.validation.js";
 
 const router = Router();
 

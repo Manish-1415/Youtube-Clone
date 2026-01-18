@@ -1,6 +1,6 @@
-import ApiResponse from "../../utility/ApiResponse";
+import ApiResponse from "../../utility/ApiResponse.js";
 import asyncHandler from "express-async-handler"
-import likedVideosService from "./likedVideos.service";
+import likedVideosService from "./likedVideos.service.js";
 
 export const giveLikedVideos = asyncHandler(async (req, res) => {
     const userId = req.user.id;

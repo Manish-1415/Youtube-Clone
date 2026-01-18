@@ -1,8 +1,8 @@
 import Router from "express"
-import validateUserMiddleware from "../../middlewares/validUser.middleware";
-import { deleteReaction, generateNewReaction, getReactions, getUserReaction, toggleReaction } from "./reaction.controller";
-import validateSchemaMiddleware from "../../middlewares/validation.middleware";
-import { reactionSchema } from "./reaction.validation";
+import validateUserMiddleware from "../../middlewares/validUser.middleware.js";
+import { deleteReaction, generateNewReaction, getReactions, getUserReaction, toggleReaction } from "./reaction.controller.js";
+import validateSchemaMiddleware from "../../middlewares/validation.middleware.js";
+import { reactionSchema } from "./reaction.validation.js";
 
 const router = Router();
 

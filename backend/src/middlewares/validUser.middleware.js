@@ -1,5 +1,5 @@
-import ApiError from "../utility/ApiError";
-import { verifyAccessToken } from "../utility/tokens";
+import ApiError from "../utility/ApiError.js";
+import { verifyAccessToken } from "../utility/tokens.js";
 
 const validateUserMiddleware = (req, res, next) => {
   // validate access token

@@ -1,5 +1,5 @@
 import asyncHandler from "express-async-handler"
-import videoService from "./video.service";
+import videoService from "./video.service.js";
 import ApiResponse from "../../utility/ApiResponse.js"
 
 export const uploadVideo = asyncHandler(async (req ,res) => {

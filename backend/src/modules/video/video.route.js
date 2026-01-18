@@ -1,11 +1,11 @@
 import Router from "express";
 
-import validateUserMiddleware from "../../middlewares/validUser.middleware";
-import findChannelForUserMiddleware from "../../middlewares/findChannelForUser.middleware";
-import checkUserIsOwnerOfChannelMiddleware from "../../middlewares/checkUsersChannelOwnerShip.middleware";
-import validateSchemaMiddleware from "../../middlewares/validation.middleware";
-import { updateVideoSchema, uploadVideoSchema } from "./video.validation";
-import { deleteTheVideo, getAllVideoOfaChannel, getVideo, updateTheUploadedVideo, updateTheViewCount, uploadVideo } from "./video.controller";
+import validateUserMiddleware from "../../middlewares/validUser.middleware.js";
+import findChannelForUserMiddleware from "../../middlewares/findChannelForUser.middleware.js";
+import checkUserIsOwnerOfChannelMiddleware from "../../middlewares/checkUsersChannelOwnerShip.middleware.js";
+import validateSchemaMiddleware from "../../middlewares/validation.middleware.js";
+import { updateVideoSchema, uploadVideoSchema } from "./video.validation.js";
+import { deleteTheVideo, getAllVideoOfaChannel, getVideo, updateTheUploadedVideo, updateTheViewCount, uploadVideo } from "./video.controller.js";
 
 const router = Router();
 

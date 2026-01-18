@@ -1,8 +1,8 @@
 import { Router } from "express";
-import validateUserMiddleware from "../../middlewares/validUser.middleware";
-import validateSchemaMiddleware from "../../middlewares/validation.middleware";
-import { createChannelSchema, updateChannelSchema } from "./channel.validation";
-import { createChannel, deleteTheChannel, getMyChannel, updateTheChannel } from "./channel.controller";
+import validateUserMiddleware from "../../middlewares/validUser.middleware.js";
+import validateSchemaMiddleware from "../../middlewares/validation.middleware.js";
+import { createChannelSchema, updateChannelSchema } from "./channel.validation.js";
+import { createChannel, deleteTheChannel, getChannel, updateTheChannel } from "./channel.controller.js";
 
 const router = Router();
 
@@ -14,6 +14,6 @@ router.patch("/channels/:channelId" , validateUserMiddleware , validateSchemaMid
 
 router.delete("/channels/:channelId" , validateUserMiddleware , deleteTheChannel);
 
-router.get("/channel/:channelId" , getMyChannel);
+router.get("/channel/:channelId" , getChannel);
 
 export default router;

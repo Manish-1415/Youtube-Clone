@@ -1,4 +1,4 @@
-import { Subscription } from "./subscription.model";
+import { Subscription } from "./subscription.model.js";
 import ApiError from "../../utility/ApiError.js"
 import {Channel} from "../channel/channel.model.js";
 import eventBus from "../../eventBus/index.js";

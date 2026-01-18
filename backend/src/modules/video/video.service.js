@@ -1,5 +1,5 @@
 import eventBus from "../../eventBus/index.js";
-import ApiError from "../../utility/ApiError"
+import ApiError from "../../utility/ApiError.js"
 import { Channel } from "../channel/channel.model.js";
 import historyService from "../history/history.service.js";
 import {Video} from "./video.model.js"

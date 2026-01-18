@@ -1,4 +1,4 @@
-import ApiError from "../utility/ApiError";
+import ApiError from "../utility/ApiError.js";
 
 
 const checkUserIsOwnerOfChannelMiddleware = (req , res , next) => {

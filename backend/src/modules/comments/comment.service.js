@@ -1,7 +1,7 @@
 import eventBus from "../../eventBus/index.js";
-import ApiError from "../../utility/ApiError"
-import { Video } from "../video/video.model";
-import { Comment } from "./comment.model"
+import ApiError from "../../utility/ApiError.js"
+import { Video } from "../video/video.model.js";
+import { Comment } from "./comment.model.js"
 
 const commentService = {
     createCommentEntry : async (videoId , userId , commentByUser , userName) => {

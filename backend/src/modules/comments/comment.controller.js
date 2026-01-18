@@ -1,6 +1,6 @@
 import asyncHandler from "express-async-handler"
-import ApiResponse from "../../utility/ApiResponse"
-import commentService from "./comment.service";
+import ApiResponse from "../../utility/ApiResponse.js"
+import commentService from "./comment.service.js";
 
 export const createComment = asyncHandler(async (req , res) => {
     const videoId = req.params.videoId;

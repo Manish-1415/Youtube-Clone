@@ -1,4 +1,4 @@
-import ApiError from "../../utility/ApiError";
+import ApiError from "../../utility/ApiError.js";
 import {Reaction} from "../reaction/reaction.model.js"
 
 const likedVideosService = {

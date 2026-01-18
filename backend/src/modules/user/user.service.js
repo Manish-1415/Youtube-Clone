@@ -1,4 +1,4 @@
-import ApiError from "../../utility/ApiError";
+import ApiError from "../../utility/ApiError.js";
 import {Auth} from "../auth/auth.model.js"
 
 const userService = {

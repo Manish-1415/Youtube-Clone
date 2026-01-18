@@ -1,8 +1,8 @@
 import Router from "express"
-import validateUserMiddleware from "../../middlewares/validUser.middleware"
-import { getNotifications, updateAllNotificationsOfChannel, updateSingleNotificationAsRead } from "./notification.controller";
-import validateSchemaMiddleware from "../../middlewares/validation.middleware";
-import { markNotificationReadValidation } from "./notification.validation";
+import validateUserMiddleware from "../../middlewares/validUser.middleware.js"
+import { getNotifications, updateAllNotificationsOfChannel, updateSingleNotificationAsRead } from "./notification.controller.js";
+import validateSchemaMiddleware from "../../middlewares/validation.middleware.js";
+import { markNotificationReadValidation } from "./notification.validation.js";
 
 const router = Router();
 

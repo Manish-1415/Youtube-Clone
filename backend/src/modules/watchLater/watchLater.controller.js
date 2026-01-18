@@ -1,6 +1,6 @@
-import ApiResponse from "../../utility/ApiResponse";
+import ApiResponse from "../../utility/ApiResponse.js";
 import asyncHandler from "express-async-handler"
-import watchLaterService from "./watchLater.service";
+import watchLaterService from "./watchLater.service.js";
 
 export const createWatchLater = asyncHandler(async (req , res) => {
     const userId = req.user.id;

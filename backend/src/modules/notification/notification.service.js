@@ -1,11 +1,15 @@
-import ApiError from "../../utility/ApiError";
-import { Notification } from "./notification.model";
+import ApiError from "../../utility/ApiError.js";
+import { Notification } from "./notification.model.js";
+import {emitToChannel} from "../../sockets/index.js"
 
 const notificationService = {
     createNotification : async (payload) => {
         const notification = await Notification.create(payload);
 
         if(!notification) throw new ApiError(500 , "Error Occurred While Creating Notification");
+
+        // before returning it simply update the UI.
+        emitToChannel(notification.receiverId , "notification" , notification);
 
         return "Everything Exectued Perfectly..."
     },

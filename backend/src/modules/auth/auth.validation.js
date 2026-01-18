@@ -23,7 +23,7 @@ export const loginSchema = Joi.object({
 
 
 
-import Joi from "joi";
+// import Joi from "joi";
 
 export const changePasswordSchema = Joi.object({
   oldPassword: Joi.string()

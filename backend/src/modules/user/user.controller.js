@@ -1,5 +1,5 @@
 import asyncHandler from "express-async-handler";
-import userService from "./user.service";
+import userService from "./user.service.js";
 import ApiResponse from "../../utility/ApiResponse.js"
 
 export const updateUserProfile = asyncHandler(async (req , res) => {

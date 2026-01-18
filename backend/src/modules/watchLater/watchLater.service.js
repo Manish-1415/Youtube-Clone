@@ -1,5 +1,5 @@
-import ApiError from "../../utility/ApiError";
-import { WatchLater } from "./watchLater.model";
+import ApiError from "../../utility/ApiError.js";
+import { WatchLater } from "./watchLater.model.js";
 
 const watchLaterService = {
     createWatchLaterEntry : async (userId , videoId) => {

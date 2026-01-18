@@ -1,6 +1,6 @@
 import asyncHandler from "express-async-handler"
-import ApiResponse from "../../utility/ApiResponse"
-import playlistService from "./playlist.service";
+import ApiResponse from "../../utility/ApiResponse.js"
+import playlistService from "./playlist.service.js";
 
 export const createPlaylist = asyncHandler(async (req , res) => {
     const userId = req.user.id;

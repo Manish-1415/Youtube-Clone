@@ -1,8 +1,8 @@
 import Router from "express";
-import validateUserMiddleware from "../../middlewares/validUser.middleware";
-import validateSchemaMiddleware from "../../middlewares/validation.middleware";
-import { updateUserProfileSchema } from "./user.validation";
-import { getUserProfile, updateUserProfile } from "./user.controller";
+import validateUserMiddleware from "../../middlewares/validUser.middleware.js";
+import validateSchemaMiddleware from "../../middlewares/validation.middleware.js";
+import { updateUserProfileSchema } from "./user.validation.js";
+import { getUserProfile, updateUserProfile } from "./user.controller.js";
 
 const router = Router();
 

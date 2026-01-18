@@ -1,5 +1,5 @@
-import ApiError from "../../utility/ApiError";
-import { Playlist } from "./playlist.model";
+import ApiError from "../../utility/ApiError.js";
+import { Playlist } from "./playlist.model.js";
 
 const playlistService = {
     createPlaylistEntry : async (userId , playlistInfoObj) => {

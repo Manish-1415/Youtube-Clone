@@ -1,5 +1,5 @@
 import ApiError from "../../utility/ApiError.js";
-import { Reaction } from "./reaction.model";
+import { Reaction } from "./reaction.model.js";
 import eventBus from "../../eventBus/index.js";
 import {Video} from "../video/video.model.js";
 import {Comment} from "../comments/comment.model.js"
@@ -13,7 +13,7 @@ const reactionService = {
 
         if(findReaction) throw new ApiError(400 , "Reaction is Already Existed.");
 
-        // if there is no like then ,
+        // if there is no reaction then ,
         const reactionObj = {
             userId ,
             targetId ,
@@ -33,6 +33,7 @@ const reactionService = {
 
         // Event Bus Things .
         
+        // receiverId consists channelId ;
         let receiverId ;
 
         if(createNewReaction.targetType === "video") {

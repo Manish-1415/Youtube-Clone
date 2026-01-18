@@ -1,5 +1,5 @@
 import asyncHandler from "express-async-handler"
-import channelService from "./channel.service";
+import channelService from "./channel.service.js";
 import ApiResponse from "../../utility/ApiResponse.js"
 
 export const createChannel = asyncHandler(async (req , res) => {

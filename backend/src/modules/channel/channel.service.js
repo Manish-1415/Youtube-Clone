@@ -1,5 +1,5 @@
 import eventBus from "../../eventBus/index.js";
-import ApiError from "../../utility/ApiError";
+import ApiError from "../../utility/ApiError.js";
 import {Auth} from "../auth/auth.model.js"
 import { Channel } from "./channel.model.js";
 
@@ -47,7 +47,7 @@ const channelService = {
         // store publicId for deleting purpose
         let oldPublicId ;
 
-        if(channelInfoObj.avatar.publicId && findTheChannel.avatar?.path) {
+        if(channelInfoObj.avatar.path && findTheChannel.avatar?.path) {
             oldPublicId = findTheChannel.avatar.path;
         }
 
@@ -60,7 +60,7 @@ const channelService = {
         // shout the event ⚙️⚙️🐉🐉👉👉😁😁
 
         if(oldPublicId && oldPublicId !== undefined) {
-            eventBus.emit("CLOUDINARY_FILE_DELETE" , {
+            eventBus.emit("CLOUDINARY_PROFILE_DELETE" , {
             publicId : oldPublicId,
         })
         }
@@ -90,7 +90,7 @@ const channelService = {
         if(!findAndDeleteChannel) throw new ApiError(500 , "Error Occurred while saving DB Entry");
 
         if(oldPublicId && oldPublicId !== undefined) {
-            eventBus.emit("CLOUDINARY_FILE_DELETE" , {
+            eventBus.emit("CLOUDINARY_PROFILE_DELETE" , {
             publicId : oldPublicId
         })
         }
