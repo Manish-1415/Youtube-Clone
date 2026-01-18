@@ -5,17 +5,21 @@ import findChannelForUserMiddleware from "../../middlewares/findChannelForUser.m
 import checkUserIsOwnerOfChannelMiddleware from "../../middlewares/checkUsersChannelOwnerShip.middleware";
 import validateSchemaMiddleware from "../../middlewares/validation.middleware";
 import { updateVideoSchema, uploadVideoSchema } from "./video.validation";
-import { deleteTheVideo, getVideo, updateTheUploadedVideo, uploadVideo } from "./video.controller";
+import { deleteTheVideo, getAllVideoOfaChannel, getVideo, updateTheUploadedVideo, updateTheViewCount, uploadVideo } from "./video.controller";
 
 const router = Router();
 
-router.post("/videos/", validateUserMiddleware , findChannelForUserMiddleware , checkUserIsOwnerOfChannelMiddleware , validateSchemaMiddleware(uploadVideoSchema) , uploadVideo);
+router.post("/:channelId", validateUserMiddleware , findChannelForUserMiddleware , checkUserIsOwnerOfChannelMiddleware , validateSchemaMiddleware(uploadVideoSchema) , uploadVideo);
 
-router.patch("/videos/:videoId/", validateUserMiddleware , findChannelForUserMiddleware , checkUserIsOwnerOfChannelMiddleware , validateSchemaMiddleware(updateVideoSchema) , updateTheUploadedVideo);
+router.patch("/:videoId", validateUserMiddleware , findChannelForUserMiddleware , checkUserIsOwnerOfChannelMiddleware , validateSchemaMiddleware(updateVideoSchema) , updateTheUploadedVideo);
 
 
-router.delete("/videos/:videoId/", validateSchemaMiddleware , findChannelForUserMiddleware , checkUserIsOwnerOfChannelMiddleware , deleteTheVideo);
+router.delete("/:videoId", validateSchemaMiddleware , findChannelForUserMiddleware , checkUserIsOwnerOfChannelMiddleware , deleteTheVideo);
 
-router.get("/video/:videoId/", getVideo);
+router.get("/:videoId", getVideo);
+
+router.get("/:channelId" , getAllVideoOfaChannel);
+
+router.patch("/:videoId/views" , updateTheViewCount)
 
 export default router;

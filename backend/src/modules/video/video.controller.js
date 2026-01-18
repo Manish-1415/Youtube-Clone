@@ -3,11 +3,11 @@ import videoService from "./video.service";
 import ApiResponse from "../../utility/ApiResponse.js"
 
 export const uploadVideo = asyncHandler(async (req ,res) => {
-    // const userId = req.user.id;
-    // const channelId = req.channel.id;
-    const videoInfoObj = req.body;
+    const channelId = req.params.channelId;
+    let videoInfoObj = req.body;
+    const userId = req.user.id;
 
-    const video = await videoService.uploadVideoEntry(videoInfoObj);
+    const video = await videoService.uploadVideoEntry(videoInfoObj , channelId , userId);
 
     return res
     .status(201)
@@ -58,4 +58,16 @@ export const getAllVideoOfaChannel = asyncHandler(async (req , res) => {
     return res
     .status(200)
     .json(new ApiResponse(200 , "All Videos Fetched", videos));
+})
+
+
+export const updateTheViewCount = asyncHandler(async (req , res) => {
+    const userId = req.user.id;
+    const videoId = req.params.videoId;
+
+    const videoWithViews = await videoService.updateViewInVideo(userId , videoId);
+
+    return res
+    .status(200)
+    .json(new ApiResponse(200 , "View Updated Successfully", videoWithViews));
 })

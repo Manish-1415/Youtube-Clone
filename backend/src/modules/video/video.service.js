@@ -1,12 +1,14 @@
 import eventBus from "../../eventBus/index.js";
 import ApiError from "../../utility/ApiError"
 import { Channel } from "../channel/channel.model.js";
+import historyService from "../history/history.service.js";
 import {Video} from "./video.model.js"
 
 const videoService = {
-    uploadVideoEntry : async (videoInfoObj) => {
-        // delete the channelId
-        delete videoInfoObj.channelId;
+    uploadVideoEntry : async (videoInfoObj , channelId , userId) => {
+        videoInfoObj.channelId = channelId;
+        videoInfoObj.ownerUserId = userId;
+
         // upload video
         const video = await Video.create(videoInfoObj);
 
@@ -17,19 +19,15 @@ const videoService = {
 
 
     updateVideoEntry : async (videoId , videoInfoObj) => {
-        // delete the channelId -
-        delete videoInfoObj.channelId;
-
         const findVideo = await Video.findById(videoId);
 
         if(!findVideo) throw new ApiError(404 , "Video Not Found");
 
         let oldThumbnailPublicId ;
-        let oldVideoPublicId;
+        // we cannot update the video 
 
-        if(videoInfoObj.video.path && videoInfoObj.thumbnail.path && findVideo.video.path && findVideo.thumbnail.path) {
+        if(videoInfoObj.thumbnail.path && findVideo.thumbnail.path) {
             oldThumbnailPublicId = findVideo.thumbnail.path;
-            oldVideoPublicId =  findVideo.video.path;
         }
 
         // if video is there then update it.
@@ -38,9 +36,8 @@ const videoService = {
         if(!findAndUpdateTheVid) throw new ApiError(500 , "Error Occurred While Saving DB Entry");
 
         if(oldThumbnailPublicId && oldVideoPublicId) {
-            eventBus.emit("CLOUDINARY_THUMB_VIDEO_DELETE", {
+            eventBus.emit("CLOUDINARY_THUMBNAIL_DELETE", {
             thumbnailPublicId : oldThumbnailPublicId,
-            videoPublicId : oldVideoPublicId
         })
         }
 
@@ -65,7 +62,7 @@ const videoService = {
         if(!findAndDeleteVideo) throw new ApiError(500 , "Error Occurred while deleting Video");
 
         if(oldThumbnailPublicId && oldVideoPublicId) {
-            eventBus.emit("CLOUDINARY_THUMB_VIDEO_DELETE" , {
+            eventBus.emit("CLOUDINARY_VIDEO_THUMB_DELETE" , {
                 videoPublicId : oldVideoPublicId,
                 thumbnailPublicId : oldThumbnailPublicId
             });
@@ -98,6 +95,23 @@ const videoService = {
         else {
             return allVids;
         }
+    },
+
+    updateViewInVideo : async (userId,videoId) => {
+        // find if vid is present
+        let findVid = await Video.findById(videoId);
+        
+        if(!findVid) throw new ApiError(404 , "Video Not Found");
+
+        findVid.views += 1;
+
+        await findVid.save();
+
+        // create history for user , cause view is linked with history
+
+        const history = await historyService.createHistoryEntryForUser(userId , videoId)
+
+        return {updatedVideoWithViews : findVid , history};
     }
 }
 

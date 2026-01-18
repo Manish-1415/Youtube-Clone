@@ -32,9 +32,6 @@ export const uploadVideoSchema = Joi.object({
   tags: Joi.array()
     .items(Joi.string())
     .default([]),
-
-//   channelId: Joi.string()
-//     .optional(), // optional now, can be null initially
 });
 
 
